@@ -16,7 +16,7 @@ public class AtmosphereUnitTest
 	@BeforeClass
 	public static void setUpBeforeClass()
 	{
-		AtmosphereUnitTest.tester = new WicketTester();// AtmosphereUnitTest.webApp);
+		AtmosphereUnitTest.tester = new WicketTester();
 	}
 
 	@Test
