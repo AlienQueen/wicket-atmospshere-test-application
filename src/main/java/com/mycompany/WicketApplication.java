@@ -30,17 +30,19 @@ import org.apache.wicket.atmosphere.EventBus;
 import org.apache.wicket.atmosphere.ResourceRegistrationListener;
 import org.apache.wicket.protocol.http.WebApplication;
 
+import com.zenika.wicket.component.debug.WicketDebugListener;
+
 /**
  * Application object for your web application. If you want to run this
  * application without deploying, run the Start class.
  */
 public class WicketApplication extends WebApplication
-		implements
-			Serializable,
-			ResourceRegistrationListener
+implements
+Serializable,
+ResourceRegistrationListener
 {
 	private static final long serialVersionUID = 1L;
-	protected EventBus eventBus;
+	protected transient EventBus eventBus;
 	List<String> uuids = new ArrayList<String>();
 
 	@Override
@@ -83,6 +85,8 @@ public class WicketApplication extends WebApplication
 			}
 		};
 		scheduler.scheduleWithFixedDelay(beeper, 2, 2, TimeUnit.SECONDS);
+
+		this.getComponentPostOnBeforeRenderListeners().add(new WicketDebugListener());
 	}
 
 	@Override

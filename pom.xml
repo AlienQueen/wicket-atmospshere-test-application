@@ -42,8 +42,8 @@
 	</licenses>
 	<properties>
 		<wicket.version>6.16.0</wicket.version>
-		<wicket-atmosphere.version>0.18-SNAPSHOT</wicket-atmosphere.version>
-		<atmosphere.version>2.1.7</atmosphere.version>
+		<wicket-atmosphere.version>0.20-SNAPSHOT</wicket-atmosphere.version>
+		<atmosphere.version>2.1.8</atmosphere.version>
 		<atmosphere-compat.version>2.0.1</atmosphere-compat.version>
 		<jetty.version>8.1.8.v20121106</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,7 +55,7 @@
 			<version>${wicket.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.wicket</groupId>
+			<groupId>org.apache.wicket.experimental.wicket6</groupId>
 			<artifactId>wicket-atmosphere</artifactId>
 			<version>${wicket-atmosphere.version}</version>
 		</dependency>
@@ -126,6 +126,11 @@
 			<artifactId>jetty-websocket</artifactId>
 			<version>${jetty.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.zenika</groupId>
+			<artifactId>wicket-component-debug</artifactId>
+			<version>0.2</version>
 		</dependency>
 	</dependencies>
 	<build>
