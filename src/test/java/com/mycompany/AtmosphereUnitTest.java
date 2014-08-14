@@ -1,46 +1,43 @@
 package com.mycompany;
 
 import org.apache.wicket.atmosphere.tester.AtmosphereTester;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
-import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class AtmosphereUnitTest
-{
-	protected static WicketTester tester;
-	protected String pageDocument;
+import static org.junit.Assert.assertFalse;
 
-	@BeforeClass
-	public static void setUpBeforeClass()
-	{
-		AtmosphereUnitTest.tester = new WicketTester();
-	}
+public class AtmosphereUnitTest {
 
 	@Test
-	public void testAtmosphere()
-	{
-		final AtmosphereTester at = new AtmosphereTester(AtmosphereUnitTest.tester, new HomePage(
-				new PageParameters()));
-		AtmosphereUnitTest.tester.assertRenderedPage(HomePage.class);
+	public void testAtmosphere() {
+		WicketTester tester = new WicketTester(new WicketApplication());
+		AtmosphereTester waTester = new AtmosphereTester(tester, new HomePage(new PageParameters()));
+		tester.assertRenderedPage(HomePage.class);
 
-		final FormTester form = AtmosphereUnitTest.tester.newFormTester("form");
+		final FormTester form = tester.newFormTester("form");
 		form.setValue("input", "Atmosphere rocks!");
+		tester.clickLink("form:send", true);
 
-		AtmosphereUnitTest.tester.clickLink("form:send", true);
-		this.pageDocument = AtmosphereUnitTest.tester.getLastResponse().getDocument();
-		System.out.println(this.pageDocument);
+		String atmosphereResponse = waTester.getPushedResponse();
+		waTester.switchOnTestMode();
+		System.out.println(atmosphereResponse);
+		tester.assertComponentOnAjaxResponse("message");
+		tester.assertLabel("message", "Atmosphere rocks!");
 
-		Assert.assertFalse("<?xml version=\"1.0\" encoding=\"UTF-8\"?><ajax-response></ajax-response>"
-				.equals(this.pageDocument));
+		waTester = new AtmosphereTester(tester, new HomePage(new PageParameters()));
+		final FormTester form2 = tester.newFormTester("form");
+		form2.setValue("input", "");
+		form2.submit("addCard");
 
-		AtmosphereUnitTest.tester.assertComponentOnAjaxResponse("message");
-		AtmosphereUnitTest.tester.assertLabel("message", "Atmosphere rocks!");
-
-		Assert.assertFalse(this.pageDocument
-				.endsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?><ajax-response></ajax-response>"));
+		atmosphereResponse = waTester.getPushedResponse();
+		waTester.switchOnTestMode();
+		System.out.println(atmosphereResponse);
+		tester.assertComponentOnAjaxResponse("parent");
+		WebMarkupContainer wmc = (WebMarkupContainer) tester.getComponentFromLastRenderedPage("parent");
+		assertFalse(wmc.hasErrorMessage());
 	}
 
 }

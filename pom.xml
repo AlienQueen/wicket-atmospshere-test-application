@@ -41,7 +41,7 @@
 		</license>
 	</licenses>
 	<properties>
-		<wicket.version>6.16.0</wicket.version>
+		<wicket.version>6.17.0-SNAPSHOT</wicket.version>
 		<wicket-atmosphere.version>0.20-SNAPSHOT</wicket-atmosphere.version>
 		<atmosphere.version>2.1.8</atmosphere.version>
 		<atmosphere-compat.version>2.0.1</atmosphere-compat.version>
